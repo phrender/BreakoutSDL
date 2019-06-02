@@ -47,9 +47,9 @@ class Game
 
 		bool m_bPaddleStick;
 
-		GameBoard* m_pxGameboard;
-		Paddle* m_pxPaddle;
-		Ball* m_pxBall;
+		std::unique_ptr<GameBoard> m_pxGameboard;
+		std::unique_ptr<Paddle> m_pxPaddle;
+		std::unique_ptr<Ball> m_pxBall;
 
 }; // Game
 

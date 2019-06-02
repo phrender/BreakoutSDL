@@ -3,8 +3,7 @@
 
 Game::Game() : 
 	m_pxWindow(nullptr), m_pxRenderer(nullptr),
-	m_pxGameboard(nullptr), m_pxPaddle(nullptr),
-	m_pxBall(nullptr), m_uiLastTick(0), m_uiFpsTick(0),
+	m_uiLastTick(0), m_uiFpsTick(0),
 	m_uiFramesPerSecond(0), m_uiFrameCount(0),
 	m_bPaddleStick(true)
 {
@@ -41,23 +40,9 @@ bool Game::Initialize()
 
 void Game::Clean()
 {
-	if (m_pxBall)
-	{
-		delete m_pxBall;
-		m_pxBall = nullptr;
-	};
-
-	if (m_pxPaddle)
-	{
-		delete m_pxPaddle;
-		m_pxPaddle = nullptr;
-	};
-
-	if (m_pxGameboard)
-	{
-		delete m_pxGameboard;
-		m_pxGameboard = nullptr;
-	};
+	m_pxGameboard.reset();
+	m_pxPaddle.reset();
+	m_pxBall.reset();
 
 	if (m_pxRenderer)
 	{
@@ -76,9 +61,9 @@ void Game::Run()
 {
 	SDL_ShowCursor(false);
 
-	m_pxGameboard = new GameBoard(m_pxRenderer);
-	m_pxPaddle = new Paddle(m_pxRenderer);
-	m_pxBall = new Ball(m_pxRenderer);
+	m_pxGameboard = std::make_unique<GameBoard>(m_pxRenderer);
+	m_pxPaddle = std::make_unique<Paddle>(m_pxRenderer);
+	m_pxBall = std::make_unique<Ball>(m_pxRenderer);
 
 	NewGame();
 
@@ -102,11 +87,11 @@ void Game::Run()
 			m_uiFpsTick = uiCurrentTick;
 			m_uiFrameCount = 0;
 
-			/*
+#ifdef _DEBUG
 			char rgcBuffer[128];
 			snprintf(rgcBuffer, 128, "Breakout SDL (fps: %u)", m_uiFramesPerSecond);
 			SDL_SetWindowTitle(m_pxWindow, rgcBuffer);
-			*/
+#endif // _DEBUG
 		}
 		else
 		{
@@ -249,7 +234,7 @@ void Game::CheckPaddleCollisions()
 {
 	float fBallCenterX = m_pxBall->GetPositionX() + (m_pxBall->GetWidth() / 2.0f);
 
-	if (m_pxBall->Collides(m_pxPaddle))
+	if (m_pxBall->Collides(m_pxPaddle.get()))
 	{
 		m_pxBall->SetPositionY(m_pxPaddle->GetPositionY() - m_pxBall->GetHeight());
 		m_pxBall->SetDirection(GetReflection(fBallCenterX - m_pxPaddle->GetPositionX()), -1.0f);
