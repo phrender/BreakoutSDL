@@ -13,6 +13,7 @@
 #include <time.h>
 #include <math.h>
 
+#include <memory>
 #include <string>
 #include <map>
 

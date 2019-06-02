@@ -13,7 +13,7 @@ class Game
 		Game();
 		~Game();
 
-		bool Initialize();
+		bool Initialize(unsigned int uiWindowWidth, unsigned int uiWindowHeight);
 		void Run();
 
 	private:
@@ -40,6 +40,8 @@ class Game
 		SDL_Window* m_pxWindow;
 		SDL_Renderer* m_pxRenderer;
 
+		unsigned int m_uiWindowWidth;
+		unsigned int m_uiWindowHeight;
 		unsigned int m_uiLastTick;
 		unsigned int m_uiFpsTick;
 		unsigned int m_uiFramesPerSecond;
