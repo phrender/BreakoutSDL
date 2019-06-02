@@ -10,15 +10,15 @@ int main()
 	_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
 #endif // (DEBUG || _DEBUG)
 
-	Game* pGame = new Game();
+	std::unique_ptr<Game> pGame = std::make_unique<Game>();
+	//Game* pGame = new Game();
 
-	if (pGame->Initialize())
+	if (pGame->Initialize(1024, 768))
 	{
 		pGame->Run();
 	};
 
-	delete pGame;
-	pGame = nullptr;
+	pGame.reset();
 
     return 0;
 }
