@@ -4,8 +4,7 @@
 Game::Game() : 
 	m_pxWindow(nullptr), m_pxRenderer(nullptr),
 	m_pxGameboard(nullptr), m_pxPaddle(nullptr),
-	m_pxBall(nullptr), m_uiWindowWidth(0),
-	m_uiWindowHeight(0), m_uiLastTick(0), m_uiFpsTick(0),
+	m_pxBall(nullptr), m_uiLastTick(0), m_uiFpsTick(0),
 	m_uiFramesPerSecond(0), m_uiFrameCount(0),
 	m_bPaddleStick(true)
 {
@@ -15,14 +14,11 @@ Game::~Game()
 {
 };
 
-bool Game::Initialize(unsigned int uiWindowWidth, unsigned int uiWindowHeight)
+bool Game::Initialize()
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 
-	m_uiWindowWidth = uiWindowWidth > 800 ? uiWindowWidth : 800;
-	m_uiWindowHeight = uiWindowHeight > 600 ? uiWindowWidth : 600;
-
-	m_pxWindow = SDL_CreateWindow("Breakout SDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_uiWindowWidth, m_uiWindowHeight, SDL_WINDOW_SHOWN);
+	m_pxWindow = SDL_CreateWindow("Breakout SDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
 
 	if (!m_pxWindow)
 	{

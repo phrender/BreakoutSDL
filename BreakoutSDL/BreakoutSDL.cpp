@@ -11,9 +11,8 @@ int main()
 #endif // (DEBUG || _DEBUG)
 
 	std::unique_ptr<Game> pGame = std::make_unique<Game>();
-	//Game* pGame = new Game();
-
-	if (pGame->Initialize(1024, 768))
+	
+	if (pGame->Initialize())
 	{
 		pGame->Run();
 	};
